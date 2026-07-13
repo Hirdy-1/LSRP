@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apply — Los Santos Roleplay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --ink:#100e0b;
+    --concrete:#211f1a;
+    --concrete-2:#2c2a23;
+    --paper:#e9e2d0;
+    --paper-dim:#b8b09b;
+    --brake:#b32127;
+    --brake-dim:#7c1a1e;
+    --ochre:#c9903f;
+    --olive:#5b5a3f;
+    --line: rgba(233,226,208,0.14);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'Oswald',sans-serif;
+    font-weight:400;
+    overflow-x:hidden;
+  }
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:999;
+    opacity:0.05;
+    background-image:
+      repeating-linear-gradient(0deg, #000 0px, transparent 1px, transparent 2px, #000 3px),
+      repeating-linear-gradient(90deg, #000 0px, transparent 1px, transparent 2px, #000 3px);
+    mix-blend-mode:overlay;
+  }
+  h1,h2,h3{
+    font-family:'Anton',sans-serif;
+    font-weight:400;
+    text-transform:uppercase;
+    letter-spacing:0.02em;
+    margin:0;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--ochre);
+  }
+  a{color:inherit;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px;}
+
+  nav{
+    position:sticky;top:0;z-index:100;
+    background:rgba(16,14,11,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:1080px;margin:0 auto;padding:0 28px;
+    display:flex;align-items:center;justify-content:space-between;
+    height:64px;
+  }
+  .brand{
+    font-family:'Anton',sans-serif;
+    font-size:19px;
+    letter-spacing:0.02em;
+    white-space:nowrap;
+    display:flex;align-items:center;gap:10px;
+    text-decoration:none;
+    color:var(--paper);
+  }
+  .brand .dot{width:10px;height:10px;background:var(--brake);border-radius:50%;box-shadow:0 0 0 3px rgba(179,33,39,0.25);}
+  .tabs{display:flex;gap:2px;}
+  .tabs a{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    text-decoration:none;
+    color:var(--paper-dim);
+    padding:10px 14px;
+    border:1px solid transparent;
+    border-bottom:none;
+    transition:color .15s ease, border-color .15s ease, background .15s ease;
+  }
+  .tabs a:hover{color:var(--paper);background:var(--concrete);border-color:var(--line);}
+  .tabs a.active{color:var(--paper);border-color:var(--line);background:var(--concrete);}
+  .tabs a:focus-visible{outline:2px solid var(--ochre);outline-offset:-2px;}
+  @media (max-width:760px){ .tabs{display:none;} }
+
+  .pagehero{
+    position:relative;
+    padding:80px 0 60px;
+    background:
+      radial-gradient(ellipse at 20% -10%, rgba(179,33,39,0.16), transparent 55%),
+      linear-gradient(180deg, var(--ink) 0%, #0b0a08 100%);
+    border-bottom:1px solid var(--line);
+  }
+  .pagehero h1{font-size:clamp(38px,6vw,64px);line-height:0.95;}
+  .pagehero p{max-width:560px;color:var(--paper-dim);font-size:17px;line-height:1.6;margin-top:20px;}
+
+  .hero{
+    position:relative;
+    padding:120px 0 90px;
+    background:
+      radial-gradient(ellipse at 20% -10%, rgba(179,33,39,0.16), transparent 55%),
+      linear-gradient(180deg, var(--ink) 0%, #0b0a08 100%);
+    border-bottom:1px solid var(--line);
+  }
+  .case-tag{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;letter-spacing:0.12em;
+    color:var(--paper-dim);
+    border:1px solid var(--line);
+    padding:6px 12px;
+    margin-bottom:28px;
+  }
+  .case-tag .dot{width:7px;height:7px;background:var(--ochre);border-radius:50%;}
+  .hero h1{
+    font-size:clamp(52px,9vw,104px);
+    line-height:0.92;
+    color:var(--paper);
+  }
+  .hero h1 span{color:var(--brake);}
+  .hero-sub{
+    max-width:540px;
+    font-size:18px;
+    line-height:1.6;
+    color:var(--paper-dim);
+    margin:24px 0 40px;
+  }
+  .cta-row{display:flex;gap:16px;flex-wrap:wrap;align-items:center;}
+  .btn{
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;letter-spacing:0.08em;text-transform:uppercase;
+    text-decoration:none;
+    padding:15px 26px;
+    display:inline-block;
+    border:1px solid var(--line);
+    transition:transform .15s ease, background .15s ease, border-color .15s ease;
+  }
+  .btn-primary{background:var(--brake);border-color:var(--brake);color:var(--paper);}
+  .btn-primary:hover{background:var(--brake-dim);transform:translateY(-2px);}
+  .btn-ghost{color:var(--paper);}
+  .btn-ghost:hover{border-color:var(--ochre);color:var(--ochre);transform:translateY(-2px);}
+
+  .stamp{
+    position:absolute;
+    right:6%;
+    top:110px;
+    border:4px solid var(--brake);
+    color:var(--brake);
+    font-family:'Anton',sans-serif;
+    font-size:20px;
+    letter-spacing:0.08em;
+    padding:10px 18px;
+    transform:rotate(9deg);
+    opacity:0.85;
+    text-align:center;
+  }
+  .stamp small{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.15em;margin-top:4px;color:var(--brake);}
+  @media (max-width:760px){ .stamp{display:none;} }
+
+  .ticker{
+    background:var(--concrete);
+    border-bottom:1px solid var(--line);
+    padding:14px 0;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.06em;
+    color:var(--paper-dim);
+    overflow:hidden;
+  }
+  .ticker-inner{display:flex;gap:48px;flex-wrap:wrap;}
+  .ticker-inner .item{white-space:nowrap;}
+  .ticker-inner .item b{color:var(--paper);font-weight:500;}
+  .status-on{color:#7fae5b;}
+
+  section{padding:90px 0;border-bottom:1px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+  .section-head{margin-bottom:48px;max-width:640px;}
+  .section-head h2{font-size:clamp(30px,4vw,42px);margin-top:10px;}
+  .section-head p{color:var(--paper-dim);font-size:16px;line-height:1.6;margin-top:14px;}
+
+  .city-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:50px;align-items:start;}
+  @media (max-width:800px){ .city-grid{grid-template-columns:1fr;} }
+  .city-copy p{color:var(--paper-dim);font-size:16px;line-height:1.75;margin:0 0 16px;}
+  .redact{background:var(--paper);color:var(--paper);border-radius:2px;}
+  .file-card{
+    background:var(--concrete);
+    border:1px solid var(--line);
+    padding:26px;
+  }
+  .file-card .eyebrow{margin-bottom:14px;display:block;}
+  .file-list{list-style:none;margin:0;padding:0;}
+  .file-list li{
+    display:flex;justify-content:space-between;
+    padding:10px 0;
+    border-bottom:1px dashed var(--line);
+    font-size:14px;
+  }
+  .file-list li:last-child{border-bottom:none;}
+  .file-list li span:last-child{color:var(--ochre);font-family:'JetBrains Mono',monospace;font-size:13px;}
+
+  .faction-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);}
+  .faction-card{
+    background:var(--ink);
+    padding:28px 24px;
+    transition:background .2s ease;
+  }
+  .faction-card:hover{background:var(--concrete);}
+  .faction-card .tag{
+    font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;
+    color:var(--brake);text-transform:uppercase;margin-bottom:10px;display:block;
+  }
+  .faction-card h3{font-size:24px;margin-bottom:10px;}
+  .faction-card p{color:var(--paper-dim);font-size:14px;line-height:1.6;margin:0;}
+
+  .rules-list{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);}
+  .rule-row{
+    background:var(--ink);
+    display:grid;grid-template-columns:64px 1fr;gap:20px;
+    padding:22px 26px;
+  }
+  .rule-row .num{font-family:'Anton',sans-serif;font-size:28px;color:var(--olive);}
+  .rule-row h3{font-size:17px;text-transform:none;font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:0;margin-bottom:6px;}
+  .rule-row p{color:var(--paper-dim);font-size:14px;line-height:1.6;margin:0;}
+  .rule-row.rule-simple{align-items:center;}
+  .rule-row.rule-simple p{color:var(--paper);font-size:15px;line-height:1.6;}
+  .rules-note{margin-top:20px;color:var(--paper-dim);font-size:13px;font-family:'JetBrains Mono',monospace;}
+
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+  @media (max-width:820px){ .steps{grid-template-columns:1fr 1fr;} }
+  @media (max-width:520px){ .steps{grid-template-columns:1fr;} }
+  .step{border:1px solid var(--line);padding:24px 20px;background:var(--concrete);}
+  .step .n{font-family:'JetBrains Mono',monospace;color:var(--ochre);font-size:12px;letter-spacing:0.1em;margin-bottom:12px;}
+  .step h3{font-size:18px;text-transform:none;font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:0;margin-bottom:8px;}
+  .step p{color:var(--paper-dim);font-size:14px;line-height:1.55;margin:0;}
+
+  .teaser-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);}
+  .teaser-card{
+    background:var(--ink);
+    padding:30px 26px;
+    text-decoration:none;
+    color:var(--paper);
+    display:block;
+    transition:background .2s ease;
+  }
+  .teaser-card:hover{background:var(--concrete);}
+  .teaser-card .eyebrow{display:block;margin-bottom:12px;}
+  .teaser-card h3{font-size:22px;margin-bottom:10px;}
+  .teaser-card p{color:var(--paper-dim);font-size:14px;line-height:1.6;margin:0 0 14px;}
+  .teaser-card .go{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.08em;color:var(--ochre);text-transform:uppercase;}
+
+  .discord-card{
+    background:var(--concrete);
+    border:1px solid var(--line);
+    padding:40px;
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;
+  }
+  .discord-card h3{font-size:26px;margin-bottom:10px;}
+  .discord-card p{color:var(--paper-dim);font-size:15px;max-width:420px;margin:0;}
+
+  footer{padding:80px 0 50px;}
+  .connect{
+    display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:32px;
+    padding-bottom:40px;border-bottom:1px solid var(--line);margin-bottom:30px;
+  }
+  .connect h2{font-size:clamp(30px,5vw,52px);max-width:520px;}
+  .foot-meta{
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;
+    font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--paper-dim);letter-spacing:0.05em;
+  }
+  .foot-meta a{text-decoration:none;color:var(--paper-dim);}
+  .foot-meta a:hover{color:var(--brake);}
+
+  ::selection{background:var(--brake);color:var(--paper);}
+
+</style>
+
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="brand" href="home.html"><span class="dot"></span>LOS SANTOS ROLEPLAY</a>
+    <div class="tabs">
+      <a href="home.html">Home</a><a href="city.html">The City</a><a href="departments.html">Departments</a><a href="rules.html">Rules</a><a href="apply.html" class="active">Apply</a><a href="discord.html">Discord</a>
+    </div>
+  </div>
+</nav>
+
+<header class="pagehero">
+  <div class="wrap">
+    <span class="eyebrow">Case file 03 — intake process</span>
+    <h1 style="margin-top:10px;">Getting in.</h1>
+    <p>Four steps between you and a character slot. Most applications clear in under a week.</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="steps">
+      <div class="step">
+        <div class="n">STEP 1</div>
+        <h3>Join the Discord</h3>
+        <p>That's where the application form, rulebook, and session schedule live.</p>
+      </div>
+      <div class="step">
+        <div class="n">STEP 2</div>
+        <h3>Submit a backstory</h3>
+        <p>A short character write-up — who they are, why they're in Los Santos, what they want.</p>
+      </div>
+      <div class="step">
+        <div class="n">STEP 3</div>
+        <h3>Sit the interview</h3>
+        <p>A 10-minute voice chat to walk through the rules and how you'd play a few scenarios.</p>
+      </div>
+      <div class="step">
+        <div class="n">STEP 4</div>
+        <h3>Get your invite</h3>
+        <p>Console invite goes out for the next open session. Bring a mic.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="discord-card">
+      <div>
+        <h3>Ready when you are.</h3>
+        <p>The application form is posted in the Discord server. Read the rulebook first — it's pinned at the top.</p>
+      </div>
+      <a class="btn btn-primary" href="discord.html">Join the Discord</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="connect">
+      <h2>Your character is<br>waiting for a first day.</h2>
+      <a class="btn btn-primary" href="discord.html">Join the Discord</a>
+    </div>
+    <div class="foot-meta">
+      <span>LOS SANTOS ROLEPLAY — LOS SANTOS COUNTY, XBOX ONE</span>
+      <span><a href="rules.html">Rulebook</a> &nbsp;·&nbsp; <a href="apply.html">Apply</a> &nbsp;·&nbsp; <a href="discord.html">Discord</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
