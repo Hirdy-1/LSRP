@@ -1,4 +1,3 @@
-/* Reset and base styles */
 body, html {
     margin: 0;
     padding: 0;
@@ -7,9 +6,7 @@ body, html {
     height: 100%;
 }
 
-/* Background GIF styling */
 .error-page {
-    /* The GIF is now set as the background here */
     background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), 
                 url('http://googleusercontent.com/image_collection/image_retrieval/15972153152773188979_0');
     background-size: cover;
@@ -19,7 +16,6 @@ body, html {
     height: 100vh;
 }
 
-/* Navbar styles */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -43,7 +39,6 @@ body, html {
     letter-spacing: 1px;
 }
 
-/* Error message styling */
 .error-container {
     text-align: center;
     padding-top: 15vh;
