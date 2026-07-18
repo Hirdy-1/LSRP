@@ -9,13 +9,14 @@ body, html {
 
 /* Background GIF styling */
 .error-page {
-    /* Replace 'your-tut-tut-gif.gif' with your actual filename */
+    /* The GIF is now set as the background here */
     background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), 
-                url('your-tut-tut-gif.gif');
+                url('http://googleusercontent.com/image_collection/image_retrieval/15972153152773188979_0');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
+    height: 100vh;
 }
 
 /* Navbar styles */
@@ -40,11 +41,6 @@ body, html {
     margin-left: 20px;
     font-size: 0.8rem;
     letter-spacing: 1px;
-    transition: color 0.3s;
-}
-
-.navbar nav a:hover {
-    color: #fff;
 }
 
 /* Error message styling */
@@ -57,7 +53,6 @@ h1 {
     color: #ff0000; 
     font-size: 5rem; 
     margin-bottom: 10px; 
-    text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
 }
 
 p {
@@ -74,9 +69,4 @@ p {
     text-decoration: none;
     font-weight: bold;
     border-radius: 5px;
-    transition: background 0.3s;
-}
-
-.back-button:hover {
-    background-color: #cc0000;
 }
