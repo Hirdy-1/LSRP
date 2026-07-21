@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Discord — Los Santos Roleplay</title>
+<title>Business Application — Los Santos Roleplay</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -360,7 +360,10 @@
   ::selection{background:var(--brake);color:var(--paper);}
 
 </style>
-
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
 </head>
 <body>
 
@@ -369,7 +372,7 @@
     <a class="brand" href="home.html"><span class="dot"></span>LOS SANTOS ROLEPLAY</a>
     <div class="nav-right">
       <div class="tabs">
-        <a href="home.html">Home</a><a href="city.html">The City</a><a href="departments.html">Departments</a><a href="rules.html">Rules</a><a href="apply.html">Apply</a><a href="discord.html" class="active">Discord</a>
+        <a href="home.html">Home</a><a href="city.html">The City</a><a href="departments.html">Departments</a><a href="rules.html">Rules</a><a href="apply.html" class="active">Apply</a><a href="discord.html">Discord</a>
       </div>
       <a class="staff-link" href="login.html">Staff Login</a>
     </div>
@@ -378,41 +381,89 @@
 
 <header class="pagehero">
   <div class="wrap">
-    <span class="eyebrow">Case file 04 — comms</span>
-    <h1 style="margin-top:10px;">Everything runs through Discord.</h1>
-    <p>Applications, the rulebook, session schedules, and department recruitment all live in one place.</p>
+    <span class="eyebrow">Case file 03b — business application</span>
+    <h1 style="margin-top:10px;">Business Registration Application</h1>
+    <p>Register a new in-character business or storefront within the city.</p>
   </div>
 </header>
 
-<section>
+<section style="border-bottom:none;">
   <div class="wrap">
-    <div class="discord-card">
-      <div>
-        <h3>Los Santos Roleplay Discord</h3>
-        <p>Replace this link with your server's actual Discord invite.</p>
+    <div class="form-grid" style="grid-template-columns:1fr;max-width:520px;">
+      <div class="form-card">
+        <form id="bizForm">
+          <div class="field">
+            <label for="b_business">Business Name</label>
+            <input id="b_business" type="text" required>
+          </div>
+          <div class="field">
+            <label for="b_owner">Owner Discord Username</label>
+            <input id="b_owner" type="text" required>
+          </div>
+          <div class="field">
+            <label for="b_gamertag">Xbox Gamertag</label>
+            <input id="b_gamertag" type="text" required>
+          </div>
+          <div class="field">
+            <label for="b_type">Business Type</label>
+            <select id="b_type" required>
+              <option value="">Select one</option>
+              <option>Retail</option>
+              <option>Mechanic / Auto Shop</option>
+              <option>Nightlife</option>
+              <option>Food &amp; Drink</option>
+              <option>Professional Services</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="b_location">Proposed Location</label>
+            <input id="b_location" type="text" required>
+          </div>
+          <div class="field">
+            <label for="b_desc">Business Description</label>
+            <textarea id="b_desc" required></textarea>
+          </div>
+          <button type="submit" class="form-submit">Submit business application</button>
+          <p class="form-msg" id="bizMsg"></p>
+        </form>
       </div>
-      <a class="btn btn-primary" href="#">Open Discord invite</a>
     </div>
   </div>
 </section>
 
-<section>
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow">Inside the server</span>
-      <h2>What you'll find on the other side.</h2>
-    </div>
-    <div class="file-card">
-      <ul class="file-list">
-        <li><span>#server-rules</span><span>Full rulebook</span></li>
-        <li><span>#apply-here</span><span>Application form</span></li>
-        <li><span>#session-schedule</span><span>Upcoming sessions</span></li>
-        <li><span>#department-recruitment</span><span>Open department slots</span></li>
-        <li><span>#support</span><span>Questions before you apply</span></li>
-      </ul>
-    </div>
-  </div>
-</section>
+<script>
+  const db = firebase.firestore();
+  const form = document.getElementById("bizForm");
+  const msg = document.getElementById("bizMsg");
+
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    const btn = form.querySelector(".form-submit");
+    btn.disabled = true;
+    msg.textContent = "Submitting...";
+    msg.className = "form-msg";
+    db.collection("businessApplications").add({
+      businessName: document.getElementById("b_business").value,
+      ownerDiscord: document.getElementById("b_owner").value,
+      gamertag: document.getElementById("b_gamertag").value,
+      businessType: document.getElementById("b_type").value,
+      location: document.getElementById("b_location").value,
+      description: document.getElementById("b_desc").value,
+      status: "pending",
+      submittedAt: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(function(){
+      msg.textContent = "Application submitted. Staff will review it soon.";
+      msg.className = "form-msg ok";
+      form.reset();
+      btn.disabled = false;
+    }).catch(function(err){
+      msg.textContent = "Something went wrong: " + err.message;
+      msg.className = "form-msg err";
+      btn.disabled = false;
+    });
+  });
+</script>
 
 <footer>
   <div class="wrap">
