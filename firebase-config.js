@@ -1,5 +1,5 @@
 <script type="module">
-  // Import the functions you need from the SDKs you need
+
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-analytics.js";
 
@@ -12,7 +12,7 @@
     appId: "1:102025009574:web:ff4e54f33ab23ad2775767",
   };
 
-  // Initialize Firebase
+
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
 </script>
